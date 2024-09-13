@@ -43,5 +43,8 @@ func redirectURL(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Header().Set("Location", originUrl)
-	http.Redirect(w, r, originUrl, http.StatusTemporaryRedirect)
+	w.WriteHeader(http.StatusTemporaryRedirect)
+	w.Write([]byte(originUrl))
+	//http.Redirect(w, r, originUrl, http.StatusTemporaryRedirect)
+
 }
