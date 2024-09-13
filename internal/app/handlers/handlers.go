@@ -25,26 +25,26 @@ func shortenURL(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 
 	for {
-		newUrl := tools.GenUrl()
-		if _, ok := storage.MapURLs[newUrl]; !ok {
-			storage.MapURLs[newUrl] = string(body)
+		newURL := tools.GenURL()
+		if _, ok := storage.MapURLs[newURL]; !ok {
+			storage.MapURLs[newURL] = string(body)
 			w.Header().Set("Content-Type", "text/plain")
 			w.WriteHeader(http.StatusCreated)
-			w.Write([]byte(r.Host + "/" + newUrl))
+			w.Write([]byte("http://" + r.Host + "/" + newURL))
 			break
 		}
 	}
 }
 
 func redirectURL(w http.ResponseWriter, r *http.Request) {
-	originUrl, ok := storage.MapURLs[r.URL.Path[1:]]
+	originURL, ok := storage.MapURLs[r.URL.Path[1:]]
 	if !ok {
 		http.Error(w, "Неверный запрос", http.StatusBadRequest)
 		return
 	}
-	w.Header().Set("Location", originUrl)
+	w.Header().Set("Location", originURL)
 	w.WriteHeader(http.StatusTemporaryRedirect)
-	w.Write([]byte(originUrl))
+	w.Write([]byte(originURL))
 	//http.Redirect(w, r, originUrl, http.StatusTemporaryRedirect)
 
 }

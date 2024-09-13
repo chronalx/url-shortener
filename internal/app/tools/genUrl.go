@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func GenUrl() string {
+func GenURL() string {
 	chars := []rune("ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
 		"abcdefghijklmnopqrstuvwxyz")
 	length := 8
